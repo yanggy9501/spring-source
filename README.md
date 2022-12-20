@@ -64,3 +64,29 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 ```
+* 8. 报错1: 参考 https://www.modb.pro/db/228792 是缺少了 spring-core 中的一个kotli jar 包，该模块引入该jar包路径即可即可
+```markdown
+    1//错误二
+    2Error:(350, 51) java: 找不到符号
+    3  符号:   变量 CoroutinesUtils
+    4  位置: 类 org.springframework.core.ReactiveAdapterRegistry.CoroutinesRegistrar
+    5
+    6Error:(351, 51) java: 找不到符号
+    7  符号:   变量 CoroutinesUtils
+    8  位置: 类 org.springframework.core.ReactiveAdapterRegistry.CoroutinesRegistrar
+```
+
+* 9.web项目，需要在目标工程中设置 build.gradle
+  ```groovy
+  plugins {
+      id 'war'
+      id 'java'
+  }
+  ```
+  同时对静态资源有严格要求（路径和名字）必须叫webapp而且在main目录下。
+```markdown
+---main
+    --- webapp
+        --- web.xml
+```
+* 10. 到项目结构上配置web配置，添加tomcat启动即可

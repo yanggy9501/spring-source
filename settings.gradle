@@ -36,4 +36,5 @@ rootProject.children.each {project ->
 	project.buildFileName = "${project.name}.gradle"
 }
 include 'my-springread-start'
+include 'my-springmvc-anno'
 
