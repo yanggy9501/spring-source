@@ -35,18 +35,19 @@ The Spring Framework is released under version 2.0 of the [Apache License](https
 ```shell
 .\gradlew build
 ```
-* 3.注意每个模块 kotlin 的版本（选择统一的一个高版本）
-* 4.控制台中文乱码问题
+* 3.排除代码风格检查，影响个人模块编译，src --> checkstyle.xml 把<module> 删除标签里面全部内容 </module>
+* 4.注意每个模块 kotlin 的版本（选择统一的一个高版本）
+* 5.控制台中文乱码问题
   * idea 设置文件编码
   * idea --> help --> Edit Customer VM Option
     ```properties
         -Dfile.encoding=utf-8
     ```
-* 5.新建模块，设置父工程为spring，即在settings.gradle 中
+* 6.新建模块，设置父工程为spring，即在settings.gradle 中
   ```groovy
     include '项目名'
   ```
-* 6.自己模块，引入依赖
+* 7.自己模块，引入依赖
 ```groovy
 dependencies {
     compile(project(":spring-beans"))

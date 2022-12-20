@@ -13,12 +13,18 @@ dependencies {
     compile(project(":spring-beans"))
     compile(project(":spring-core"))
     compile(project(":spring-context"))
+    compile(project(":spring-context-support"))
     compile(project(":spring-aop"))
+    compile(project(":spring-jdbc"))
+    compile(project(":spring-aspects"))
+
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+
 //    compile(project(":spring-web"))
 //    compile(project(":spring-webmvc"))
 
     /* 需要引入该aspectj的依赖，否则代理会出现问题，运行是出现问题 */
-    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.4'
+//    compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.4'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
