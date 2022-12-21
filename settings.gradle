@@ -37,4 +37,5 @@ rootProject.children.each {project ->
 }
 include 'my-springread-start'
 include 'my-springmvc-anno'
+include 'my-springmvx-xml'
 
