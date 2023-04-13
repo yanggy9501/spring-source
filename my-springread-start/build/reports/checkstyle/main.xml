@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<checkstyle version="8.22">
-<file name="D:\tmp\spring-framework-5.2.0.RELEASE\my-springread-start\src\main\java\com\readspring\Main.java">
-</file>
-<file name="D:\tmp\spring-framework-5.2.0.RELEASE\my-springread-start\src\main\java\com\readspring\config\AppConfig.java">
-</file>
-<file name="D:\tmp\spring-framework-5.2.0.RELEASE\my-springread-start\src\main\java\com\readspring\config\ConfigTest.java">
-</file>
-</checkstyle>

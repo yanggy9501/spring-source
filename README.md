@@ -30,12 +30,12 @@ Follow [@SpringCentral](https://twitter.com/springcentral), [@SpringFramework](h
 The Spring Framework is released under version 2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
 
 ## 补充说明
-* 1.剔除spring-aspectj模块，该模块是apectj的，语法上与java不同，右键该模块找到 load/unload modules
+* 1.剔除spring-aspectj模块，该模块是apectj的，语法上与java不同，右键该模块找到 load/unload modules; 或者添加aspectj编译器编译
 * 2.项目需要预编译，不然编译不成功
 ```shell
 .\gradlew build
 ```
-* 3.排除代码风格检查，影响个人模块编译，src --> checkstyle.xml 把<module> 删除标签里面全部内容 </module>
+* 3.排除代码风格检查，影响个人模块编译，src --> checkstyle.xml 把<module> 标签里面全部内容 </module>删除
 * 4.注意每个模块 kotlin 的版本（选择统一的一个高版本）
 * 5.控制台中文乱码问题
   * idea 设置文件编码
@@ -64,7 +64,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 ```
-* 8. 报错1: 参考 https://www.modb.pro/db/228792 是缺少了 spring-core 中的一个kotli jar 包，该模块引入该jar包路径即可即可
+* 8. 报错1: 参考 https://www.modb.pro/db/228792 是缺少了 spring-core 中的一个kotlin jar 包，该模块引入该jar包路径即可即可
 ```markdown
     1//错误二
     2Error:(350, 51) java: 找不到符号

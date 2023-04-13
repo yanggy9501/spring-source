@@ -10,6 +10,10 @@ public class User {
 
     private String sex;
 
+	private void init() {
+		System.out.println("init...");
+	}
+
     @Override
     public String toString() {
         return "User{" +
