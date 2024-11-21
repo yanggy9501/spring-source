@@ -24,6 +24,6 @@ public class TObjectEventV3<T> implements ResolvableTypeProvider {
 	// 可解析类型
 	@Override
 	public ResolvableType getResolvableType() {
-		return ResolvableType.forClassWithGenerics(getClass(), ResolvableType.forInstance(getData()));
+		return ResolvableType.forClassWithGenerics(getClass(), ResolvableType.forInstance(this.data));
 	}
 }
