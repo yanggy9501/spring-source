@@ -14,13 +14,13 @@ public class TObjectEventListenerService {
 	}
 
 	@EventListener
-	public void handleEvent(TObjectEventV2<User> personEvent) {
+	public void handleEventV2(TObjectEventV2<User> personEvent) {
 		System.out.println("EventListenerService:TObjectEventV2<User>");
 		System.out.println(personEvent);
 	}
 
 	@EventListener
-	public void handleEvent(TObjectEventV3<User> personEvent) {
+	public void handleEventV3(TObjectEventV3<User> personEvent) {
 		System.out.println("EventListenerService:TObjectEventV3<User>");
 		System.out.println(personEvent);
 	}
