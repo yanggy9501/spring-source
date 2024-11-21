@@ -36,7 +36,7 @@ import org.springframework.context.annotation.*;
  *     new ParameterizedTypeReference<ApiResponse<List<String>>>() {}
  * ).getBody();
  *
- * esolvableType允许我们在运行时动态构造包含泛型信息的类型。在以下代码中，我们使用ResolvableType动态构建ApiResponse<T>的类型，并使用ParameterizedTypeReference来获取泛型信息：
+ * resolvableType允许我们在运行时动态构造包含泛型信息的类型。在以下代码中，我们使用ResolvableType动态构建ApiResponse<T>的类型，并使用ParameterizedTypeReference来获取泛型信息：
  * ApiResponse<T> apiResponse = (ApiResponse<T>) restTemplate.exchange(
  *     url,
  *     method,
