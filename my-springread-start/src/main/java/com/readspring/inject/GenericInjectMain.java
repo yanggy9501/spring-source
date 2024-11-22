@@ -38,7 +38,7 @@ ResolvableType 可以通过多种方式创建，主要包括：
 注意：spring 应该是通过静态代码进行泛型分析的，如果是运行期间的泛型则无法获取
 
  */
-public class InjectMain {
+public class GenericInjectMain {
 	public static void main(String[] args) {
 		ResolvableType resolvableType = ResolvableType.forClass(ServiceA.class);
 		//
@@ -47,6 +47,8 @@ public class InjectMain {
 		ResolvableType resolvableType2 = ResolvableType.forClassWithGenerics(ServiceA.class, ResolvableType.forInstance(""));
 
 		ResolvableType resolvableType4 = ResolvableType.forClass(StringService.class);
+
+		ResolvableType resolvableType5 = ResolvableType.forClass(new StringService().getClass());
 
 		System.out.println(resolvableType);
 		System.out.println(resolvableType1);
@@ -59,7 +61,11 @@ public class InjectMain {
 
 		ResolvableType superType4 = resolvableType4.getSuperType();
 		ResolvableType genericType4 = superType4.getGeneric(0);
-		System.out.println("GenericType: " + superType4.getType().getTypeName()); // 能获取到具体的泛型 string
+		System.out.println("GenericType: " + genericType4.getType().getTypeName()); // 能获取到具体的泛型 string
+
+		ResolvableType superType5 = resolvableType5.getSuperType();
+		ResolvableType genericType5 = superType5.getGeneric(0);
+		System.out.println("GenericType: " + genericType5.getType().getTypeName()); // 能获取到具体的泛型 string
 	}
 
 	@Component
