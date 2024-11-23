@@ -1,5 +1,6 @@
 package com.readspring.inject;
 
+import com.readspring.entity.User;
 import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
 
