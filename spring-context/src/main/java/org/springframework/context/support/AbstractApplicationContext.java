@@ -488,14 +488,15 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 		// 同步锁
 		synchronized (this.startupShutdownMonitor) {
 			// Prepare this context for refreshing.
-			/*xxx:准备用于刷新的上下文,该方法执行后，当前上下文的 active 状态为真，environment被初始化。  同时，初始化应用启动前的应用监听器. */
+			/*xxx:准备用于刷新的上下文,该方法执行后，当前上下文的 active 状态为真，environment被初始化。同时，初始化应用启动前的应用监听器.*/
 			prepareRefresh();
 
 			// Tell the subclass to refresh the internal bean factory.
 			ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();
 
 			// Prepare the bean factory for use in this context.
-			/*xxx: 通知子类，刷新内部实际的bean工厂。 变更上下文的启动状态 refreshed 为true。  同时，在这个阶段，会进行beanDefinition的加载，包括 xml 以及 annotation */
+			/*xxx: 通知子类，刷新内部实际的bean工厂。变更上下文的启动状态 refreshed 为true。同时，在这个阶段，会进行beanDefinition的加载，包括 xml 以及 annotation */
+
 			prepareBeanFactory(beanFactory);
 
 			try {
@@ -505,7 +506,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				postProcessBeanFactory(beanFactory);
 
 				// Invoke factory processors registered as beans in the context.
-				/*xxx: 处理 BeanFactory 的后置处理器，代理给PostProcessorRegistrationDelegate 进行处理，在这里完成 Bean 的扫描*/
+				/*xxx: 【BeanDefinition】处理 BeanFactory 的后置处理器，代理给PostProcessorRegistrationDelegate 进行处理，在这里完成 Bean 的扫描*/
 				invokeBeanFactoryPostProcessors(beanFactory);
 
 				// Register bean processors that intercept bean creation.

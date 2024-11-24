@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.lang.reflect.Proxy;
 
-public class RpcFactoryBean<T> implements FactoryBean<T>, BeanClassLoaderAware {
+public class RpcFactoryBean<T> implements FactoryBean<Object>, BeanClassLoaderAware {
 
     private ClassLoader classLoader;
 
@@ -25,13 +25,14 @@ public class RpcFactoryBean<T> implements FactoryBean<T>, BeanClassLoaderAware {
 
     @SuppressWarnings("all")
     @Override
-    public T getObject() throws Exception {
-        return (T) Proxy.newProxyInstance(
-            classLoader,
-            new Class<?>[]{type},
-            new RpcInvocation(restTemplate, type)
-        );
-    }
+    public Object getObject() throws Exception {
+		Object proxy = Proxy.newProxyInstance(
+				classLoader,
+				new Class<?>[]{type},
+				new RpcInvocation(restTemplate, type)
+		);
+		return  proxy;
+	}
 
     @Override
     public Class<?> getObjectType() {

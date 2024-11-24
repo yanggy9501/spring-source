@@ -1,8 +1,6 @@
-package com.readspring.inject;
+package com.readspring.inject.generic;
 
-import com.readspring.entity.User;
 import org.springframework.core.ResolvableType;
-import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 
@@ -39,7 +37,7 @@ ResolvableType 可以通过多种方式创建，主要包括：
 注意：spring 应该是通过静态代码进行泛型分析的，如果是运行期间的泛型则无法获取
 
  */
-public class GenericInjectMain {
+public class ResolvableTypeMain {
 	public static void main(String[] args) {
 		ResolvableType resolvableType = ResolvableType.forClass(ServiceA.class);
 		//
@@ -69,17 +67,14 @@ public class GenericInjectMain {
 		System.out.println("GenericType: " + genericType5.getType().getTypeName()); // 能获取到具体的泛型 string
 	}
 
-	@Component
 	public static class ServiceA<T> {
 		// Some code here
 	}
 
-	@Component
 	public static class StringService extends ServiceA<String> {
 		// Implementation for String type
 	}
 
-	@Component
 	public static class IntegerService extends ServiceA<Integer> {
 		// Implementation for Integer type
 	}
