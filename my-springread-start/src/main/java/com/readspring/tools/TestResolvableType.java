@@ -13,7 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * 可解析的类，解析bean的类型，包含类，方法，参数，返回值的泛型信息
+ * 可解析的类，解析bean的类型，包含类，方法，参数，返回值的泛型信息。
+ *
+ * 泛型类可以使用 ResolvableType 类统一表示，泛型类型信息都可以通过 ResolvableType 中的方法直接获取，而不必再额外调用其他类的方法，
+ * 获取父类型信息的时候，ResolvableType 还友好的获取到了父类型中的实际类型，ResolvableType 提供的能力远不止如此。
  *
  * @author yanggy
  */
