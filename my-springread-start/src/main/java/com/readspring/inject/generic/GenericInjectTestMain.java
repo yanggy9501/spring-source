@@ -5,7 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@ComponentScan(basePackages = {"com.readspring.inject.generic"})
+@ComponentScan(basePackages = {"com.readspring.tools.generic"})
 public class GenericInjectTestMain {
 	public static void main(String[] args) {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(GenericInjectTestMain.class);

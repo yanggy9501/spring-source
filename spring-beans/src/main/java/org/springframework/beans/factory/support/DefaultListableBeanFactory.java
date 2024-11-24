@@ -1247,6 +1247,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 				return multipleBeans;
 			}
 
+			// 查找 AutoWire 候选者，泛型Bean在这里找到具体类型（MyService<User>)
 			Map<String, Object> matchingBeans = findAutowireCandidates(beanName, type, descriptor);
 			if (matchingBeans.isEmpty()) {
 				if (isRequired(descriptor)) {

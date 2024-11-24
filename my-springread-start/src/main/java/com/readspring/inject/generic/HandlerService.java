@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class HandlerService {
 	@Autowired
-	private GHandler<Order> orderGHandler;
+	private GHandler<Order> oGHandler;
 
 	@Autowired
-	private GHandler<User> userGHandler;
+	private GHandler<User> uGHandler;
 
 	public void test() {
-		System.out.println(orderGHandler);
-		System.out.println(userGHandler);
+		System.out.println(oGHandler);
+		System.out.println(uGHandler);
 	}
 }

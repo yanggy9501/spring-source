@@ -554,7 +554,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 			instanceWrapper = this.factoryBeanInstanceCache.remove(beanName);
 		}
 		if (instanceWrapper == null) {
-			instanceWrapper = createBeanInstance(beanName, mbd, args);
+			instanceWrapper = createBeanInstance(beanName, mbd, args);// 创建bean的实例
 		}
 		final Object bean = instanceWrapper.getWrappedInstance();
 		Class<?> beanType = instanceWrapper.getWrappedClass();
@@ -566,6 +566,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		synchronized (mbd.postProcessingLock) {
 			if (!mbd.postProcessed) {
 				try {
+					// 修改bean定义的扩展点；其中MergedBeanDefinitionPostProcessor的postProcessMergedBeanDefinition 找到@Autowired的注入点
 					applyMergedBeanDefinitionPostProcessors(mbd, beanType, beanName);
 				}
 				catch (Throwable ex) {
@@ -1091,6 +1092,7 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		for (BeanPostProcessor bp : getBeanPostProcessors()) {
 			if (bp instanceof MergedBeanDefinitionPostProcessor) {
 				MergedBeanDefinitionPostProcessor bdp = (MergedBeanDefinitionPostProcessor) bp;
+				// MergedBeanDefinitionPostProcessor的postProcessMergedBeanDefinition 找到@Autowired的注入点
 				bdp.postProcessMergedBeanDefinition(mbd, beanType, beanName);
 			}
 		}

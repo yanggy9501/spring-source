@@ -1,4 +1,4 @@
-package com.readspring.inject.generic;
+package com.readspring.tools;
 
 import org.springframework.core.ResolvableType;
 
