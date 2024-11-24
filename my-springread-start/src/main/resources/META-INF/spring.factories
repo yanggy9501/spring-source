@@ -1,0 +1,3 @@
+com.readspring.tools.spi.HelloSpi =\
+    com.readspring.tools.spi.OneHelloSpiImpl, \
+    com.readspring.tools.spi.TwoHelloSpiImpl
