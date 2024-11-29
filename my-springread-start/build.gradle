@@ -17,6 +17,7 @@ dependencies {
     compile(project(":spring-aop"))
     compile(project(":spring-jdbc"))
     compile(project(":spring-aspects"))
+    compile(project(":spring-web"))
 
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
 

@@ -60,6 +60,7 @@ import org.springframework.util.StringUtils;
  * @since 3.2
  */
 /** xxx: spring spi 机制 */
+// SpringFactoriesLoader类属于Spring框架私有的一种扩展方案，其主要功能就是从指定的配置文件META-INF/spring.factories加载配置，来加载到需要自动配置的类的全限定名列表
 public final class SpringFactoriesLoader {
 
 	/**
