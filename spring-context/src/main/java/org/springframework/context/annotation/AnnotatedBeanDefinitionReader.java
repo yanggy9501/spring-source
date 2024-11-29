@@ -253,7 +253,7 @@ public class AnnotatedBeanDefinitionReader {
 			@Nullable BeanDefinitionCustomizer[] customizers) {
 
 		AnnotatedGenericBeanDefinition abd = new AnnotatedGenericBeanDefinition(beanClass);
-		/*xxx: 通过条件处理器，对其进行条件验证，不满足则跳过，不进行注册*/
+		/*xxx: @Conditional 通过条件处理器，对其进行条件验证，不满足则跳过，不进行注册*/
 		if (this.conditionEvaluator.shouldSkip(abd.getMetadata())) {
 			return;
 		}

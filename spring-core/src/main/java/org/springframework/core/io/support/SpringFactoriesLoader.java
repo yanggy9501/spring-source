@@ -59,6 +59,7 @@ import org.springframework.util.StringUtils;
  * @author Sam Brannen
  * @since 3.2
  */
+/** xxx: spring spi 机制 */
 public final class SpringFactoriesLoader {
 
 	/**

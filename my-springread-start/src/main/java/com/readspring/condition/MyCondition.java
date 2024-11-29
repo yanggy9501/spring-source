@@ -3,7 +3,12 @@ package com.readspring.condition;
 import org.springframework.context.annotation.*;
 import org.springframework.core.type.AnnotatedTypeMetadata;
 
+// org.springframework.context.annotation.ConditionEvaluator#shouldSkip
+// 在 beanDefinition 扫描的时候执行
 public class MyCondition implements Condition {
+	public MyCondition() {
+		System.out.println("-------------");
+	}
 
 	/**
 	 * @param context the condition context

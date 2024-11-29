@@ -13,7 +13,7 @@ public class SpiTest {
 
 	public void testSpringSpi() {
 		List<HelloSpi> helloSpiList = SpringFactoriesLoader.loadFactories(HelloSpi.class, this.getClass().getClassLoader());
-		Iterator<HelloSpi> iterator = helloSpiList.iterator();
+ 		Iterator<HelloSpi> iterator = helloSpiList.iterator();
 		while (iterator.hasNext()) {
 			HelloSpi next = iterator.next();
 			System.out.println(next.getName() + " 准备执行");
