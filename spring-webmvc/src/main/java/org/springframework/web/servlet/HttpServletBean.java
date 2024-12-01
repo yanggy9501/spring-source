@@ -147,6 +147,17 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 	 */
 	@Override
 	public final void init() throws ServletException {
+		// 首先为Servlet实例初始化相应的配置参数
+		// 回想下web.xml中配置的参数（告诉Servlet实例配置文件的所在位置）：
+		//  <servlet><!-- Spring MVC 核心控制器 DispatcherServlet 配置 -->
+		//        <servlet-name>SpringMVC</servlet-name>
+		//        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		//        <init-param><!--以下init-param是自定义SpringMVC的配置文件的位置 -->
+		//            <param-name>contextConfigLocation</param-name>
+		//            <param-value>classpath:springmvc.xml</param-value>
+		//        </init-param>
+		//        <load-on-startup>1</load-on-startup>
+		//    </servlet>
 
 		// Set bean properties from init parameters.
 		PropertyValues pvs = new ServletConfigPropertyValues(getServletConfig(), this.requiredProperties);
@@ -167,6 +178,7 @@ public abstract class HttpServletBean extends HttpServlet implements Environment
 		}
 
 		// Let subclasses do whatever initialization they like.
+		// 调用的是FrameworkServlet的initServletBean方法（主要是创建HandlerMapping映射处理器、HandlerAdapter处理适配器，以及初始化DispatchServlet）
 		initServletBean();
 	}
 

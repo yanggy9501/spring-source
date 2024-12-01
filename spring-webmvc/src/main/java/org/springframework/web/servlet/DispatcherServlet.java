@@ -488,6 +488,9 @@ public class DispatcherServlet extends FrameworkServlet {
 
 
 	/**
+	 * IoC容器初始化以后，最后调用了 DispatcherServlet的onRefresh()方法，
+	 * 在onRefresh()方法中又是直接调用 initStrategies()方法初始化 SpringMVC 的九大组件。
+	 *
 	 * This implementation calls {@link #initStrategies}.
 	 */
 	@Override
@@ -499,12 +502,19 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * Initialize the strategy objects that this servlet uses.
 	 * <p>May be overridden in subclasses in order to initialize further strategy objects.
 	 */
+	// 初始化servlet使用到的一些默认处理类
 	protected void initStrategies(ApplicationContext context) {
+		// 文件上传主件
 		initMultipartResolver(context);
+		// 初始化国际化语言环境
 		initLocaleResolver(context);
+		// 初始化模板处理器
 		initThemeResolver(context);
+		// HandlerMapping 寻找实现 @Controller 接口
 		initHandlerMappings(context);
+		// 初始化处理器设配器
 		initHandlerAdapters(context);
+		// 初始化异常处理器
 		initHandlerExceptionResolvers(context);
 		initRequestToViewNameTranslator(context);
 		initViewResolvers(context);
@@ -616,6 +626,7 @@ public class DispatcherServlet extends FrameworkServlet {
 		// Ensure we have at least one HandlerMapping, by registering
 		// a default HandlerMapping if no other mappings are found.
 		if (this.handlerMappings == null) {
+			// handlerMappings 为空则使用默认的处理器映射器的策略
 			this.handlerMappings = getDefaultStrategies(context, HandlerMapping.class);
 			if (logger.isTraceEnabled()) {
 				logger.trace("No HandlerMappings declared for servlet '" + getServletName() +
@@ -866,6 +877,7 @@ public class DispatcherServlet extends FrameworkServlet {
 			for (String className : classNames) {
 				try {
 					Class<?> clazz = ClassUtils.forName(className, DispatcherServlet.class.getClassLoader());
+					// 创建对应对象
 					Object strategy = createDefaultStrategy(context, clazz);
 					strategies.add((T) strategy);
 				}
@@ -912,6 +924,7 @@ public class DispatcherServlet extends FrameworkServlet {
 
 		// Keep a snapshot of the request attributes in case of an include,
 		// to be able to restore the original attributes after the include.
+		/*xxx: 当为 include 请求时，对request 的 Attribute 做快照备份*/
 		Map<String, Object> attributesSnapshot = null;
 		if (WebUtils.isIncludeRequest(request)) {
 			attributesSnapshot = new HashMap<>();
@@ -925,21 +938,27 @@ public class DispatcherServlet extends FrameworkServlet {
 		}
 
 		// Make framework objects available to handlers and view objects.
+		/*xxx: 对request 设置一些属性*/
 		request.setAttribute(WEB_APPLICATION_CONTEXT_ATTRIBUTE, getWebApplicationContext());
 		request.setAttribute(LOCALE_RESOLVER_ATTRIBUTE, this.localeResolver);
 		request.setAttribute(THEME_RESOLVER_ATTRIBUTE, this.themeResolver);
 		request.setAttribute(THEME_SOURCE_ATTRIBUTE, getThemeSource());
 
 		if (this.flashMapManager != null) {
+			/*xxx: flashMap 是用于在 redirect 记录参数信息的 */
 			FlashMap inputFlashMap = this.flashMapManager.retrieveAndUpdate(request, response);
 			if (inputFlashMap != null) {
+				/*xxx: 用于保存 上次 请求中，转发过来的属性*/
 				request.setAttribute(INPUT_FLASH_MAP_ATTRIBUTE, Collections.unmodifiableMap(inputFlashMap));
 			}
+			/*xxx: 用于保存 本次请求 需要转发的属性*/
 			request.setAttribute(OUTPUT_FLASH_MAP_ATTRIBUTE, new FlashMap());
+			/*xxx: flushManager用于管理它们*/
 			request.setAttribute(FLASH_MAP_MANAGER_ATTRIBUTE, this.flashMapManager);
 		}
 
 		try {
+			/*xxx: 进行分发处理*/
 			doDispatch(request, response);
 		}
 		finally {
@@ -999,6 +1018,7 @@ public class DispatcherServlet extends FrameworkServlet {
 	 */
 	protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpServletRequest processedRequest = request;
+		/*xxx: 处理请求的处理器链(包含处理器和对应的 Interceptor)*/
 		HandlerExecutionChain mappedHandler = null;
 		boolean multipartRequestParsed = false;
 
@@ -1009,20 +1029,30 @@ public class DispatcherServlet extends FrameworkServlet {
 			Exception dispatchException = null;
 
 			try {
+				/*xxx: 检查是不是上传文件*/
 				processedRequest = checkMultipart(request);
 				multipartRequestParsed = (processedRequest != request);
 
 				// Determine handler for the current request.
+				/*xxx: 根据 request url 找到 handler(处理器映射器 mappingHandler)，生成执行器链*/
 				mappedHandler = getHandler(processedRequest);
 				if (mappedHandler == null) {
+					/*xxx: 报 404 错误*/
 					noHandlerFound(processedRequest, response);
 					return;
 				}
 
 				// Determine handler adapter for the current request.
+				/*xxx: 根据 handler 处理器映射器找到 handlerAdapter 处理器设配器*/
+				// 执行HandlerAdapter处理一系列的操作，如：参数封装，数据格式转换，数据验证等操作
+				// 执行处理器Handler(Controller，也叫页面控制器)
+				// Handler执行完成返回ModelAndView
+				// HandlerAdapter将Handler执行结果ModelAndView返回到DispatcherServlet
 				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
 
 				// Process last-modified header, if supported by the handler.
+				/*xxx: 处理 GET,HEAD 请求的  Last-Modified */
+				/*xxx: 浏览器第一次跟服务器请求资源时(GET,HEAD请求)，服务器的响应头会包含 Last-Modified属性*/
 				String method = request.getMethod();
 				boolean isGet = "GET".equals(method);
 				if (isGet || "HEAD".equals(method)) {
@@ -1031,19 +1061,23 @@ public class DispatcherServlet extends FrameworkServlet {
 						return;
 					}
 				}
-
+				/*xxx: 执行相应 Interceptor 的 preHandle 方法(拦截器)*/
 				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
 					return;
 				}
 
 				// Actually invoke the handler.
+				/*xxx: controller 便是在此处执行的，包括 controller 处理器执行器的参数解析，返回实体 mv，也可能没有 null; AbstractHandlerMethodAdapter*/
 				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
 
+				/*xxx: 如果需要异步处理，直接返回 */
 				if (asyncManager.isConcurrentHandlingStarted()) {
 					return;
 				}
 
+				/*xxx: 当 view 为空时， (如,Handler 返回值 为 void)， 则根据 request 设置 默认 view*/
 				applyDefaultViewName(processedRequest, mv);
+				/*xxx: 执行 相应 Interceptor 的 postHandle（拦截器）*/
 				mappedHandler.applyPostHandle(processedRequest, response, mv);
 			}
 			catch (Exception ex) {
@@ -1229,8 +1263,15 @@ public class DispatcherServlet extends FrameworkServlet {
 	 */
 	@Nullable
 	protected HandlerExecutionChain getHandler(HttpServletRequest request) throws Exception {
+		/**
+		 * @RequestMapping 是通过 RequestMappingHandlerMapping 负责解析的。
+		 * RequestMapping 主要负责根据请求 uri 映射到对应的 handler（controller） 方法
+		 * RequestMappingHandlerMapping 是 RequestMapping 的一个实现类，负责根据 @RequestMapping 注解进行映射
+		 * RequestMapping 可分为两个过程：1 解析，2 映射
+		 */
 		if (this.handlerMappings != null) {
 			for (HandlerMapping mapping : this.handlerMappings) {
+				// 处理器过滤链
 				HandlerExecutionChain handler = mapping.getHandler(request);
 				if (handler != null) {
 					return handler;

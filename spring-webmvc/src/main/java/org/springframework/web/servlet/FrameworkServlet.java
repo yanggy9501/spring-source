@@ -214,6 +214,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	private boolean enableLoggingRequestDetails = false;
 
 	/** WebApplicationContext for this servlet. */
+	// web 应用的 spring 容器
 	@Nullable
 	private WebApplicationContext webApplicationContext;
 
@@ -515,6 +516,8 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 
 
 	/**
+	 * 要是创建HandlerMapping映射处理器、HandlerAdapter处理适配器，以及初始化DispatchServlet
+	 *
 	 * Overridden method of {@link HttpServletBean}, invoked after any bean properties
 	 * have been set. Creates this servlet's WebApplicationContext.
 	 */
@@ -527,7 +530,9 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 		long startTime = System.currentTimeMillis();
 
 		try {
+			//  // 创建并初始化HandlerMapping映射处理器，以及HandlerAdapter处理适配器
 			this.webApplicationContext = initWebApplicationContext();
+			// 初始化DispatchServlet实例
 			initFrameworkServlet();
 		}
 		catch (ServletException | RuntimeException ex) {
@@ -558,10 +563,14 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 	 * @see #setContextConfigLocation
 	 */
 	protected WebApplicationContext initWebApplicationContext() {
+		// 从 ServletContext 中获取父容器 WebApplicationContext
 		WebApplicationContext rootContext =
 				WebApplicationContextUtils.getWebApplicationContext(getServletContext());
+
+		// 声明子容器
 		WebApplicationContext wac = null;
 
+		// 建立父子容器
 		if (this.webApplicationContext != null) {
 			// A context instance was injected at construction time -> use it
 			wac = this.webApplicationContext;
@@ -575,6 +584,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 						// the root application context (if any; may be null) as the parent
 						cwac.setParent(rootContext);
 					}
+					// 建立了父子容器的关联关系，并最终调用了configureAndRefreshWebApplicationContext(cwac)方法来初始化IoC容器。方法最终调用了AbstractApplicationContext的refresh()方法。
 					configureAndRefreshWebApplicationContext(cwac);
 				}
 			}
@@ -591,6 +601,7 @@ public abstract class FrameworkServlet extends HttpServletBean implements Applic
 			wac = createWebApplicationContext(rootContext);
 		}
 
+		// 触发 onRefresh 方法
 		if (!this.refreshEventReceived) {
 			// Either the context is not a ConfigurableApplicationContext with refresh
 			// support or the context injected at construction time had already been
