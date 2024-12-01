@@ -519,6 +519,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				initApplicationEventMulticaster();
 
 				// Initialize other special beans in specific context subclasses.
+				// tomcat 服务器启动 @see org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext#onRefresh
 				onRefresh();
 
 				// Check for listener beans and register them.
@@ -528,6 +529,7 @@ public abstract class AbstractApplicationContext extends DefaultResourceLoader
 				finishBeanFactoryInitialization(beanFactory);
 
 				// Last step: publish corresponding event.
+				// 完成刷新，如：执行容器 LifeCycle#start方法（tomcat启动通过该方法启动）
 				finishRefresh();
 			}
 

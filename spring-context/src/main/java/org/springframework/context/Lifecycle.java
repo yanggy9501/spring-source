@@ -47,6 +47,7 @@ package org.springframework.context;
  * @see org.springframework.jms.listener.AbstractMessageListenerContainer
  * @see org.springframework.scheduling.quartz.SchedulerFactoryBean
  */
+// Lifecycle是Spring中最基础的生命周期接口，该接口定义了容器启动和停止的方法。方便开发者扩展自己的特定逻辑，比如启动和停止某些后台进程。
 public interface Lifecycle {
 
 	/**
