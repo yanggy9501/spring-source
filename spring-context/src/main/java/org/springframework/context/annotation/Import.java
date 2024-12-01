@@ -49,10 +49,14 @@ import java.lang.annotation.Target;
  * @see ImportSelector
  * @see ImportBeanDefinitionRegistrar
  * @see ImportResource
+ *
+ * 具体解析：
+ * @see org.springframework.context.annotation.ConfigurationClassParser.processImports
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
+// @Import 给容器导入组件，该注解在配置类 BeanDefinition 解析阶段完成，主要查看是否有 @Import 注解
 public @interface Import {
 
 	/**

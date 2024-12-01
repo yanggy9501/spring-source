@@ -581,7 +581,7 @@ class ConfigurationClassParser {
 							// 执行 ImportSelector#selectImports，如com.readspring.importor.MyImportSelectorBean.selectImports 返回需要 import 的bean
 							String[] importClassNames = selector.selectImports(currentSourceClass.getMetadata());
 							Collection<SourceClass> importSourceClasses = asSourceClasses(importClassNames);
-							// 递归处理
+							// 递归处理（import 的类里面可能还有 @import 注解）
 							processImports(configClass, currentSourceClass, importSourceClasses, false);
 						}
 					}

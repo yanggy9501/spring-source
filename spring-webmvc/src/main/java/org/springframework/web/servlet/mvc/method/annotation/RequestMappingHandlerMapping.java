@@ -220,7 +220,7 @@ public class RequestMappingHandlerMapping extends RequestMappingInfoHandlerMappi
 	@Override
 	@Nullable
 	protected RequestMappingInfo getMappingForMethod(Method method, Class<?> handlerType) {
-		// 根据传递[方法]，创建请求映射信息（子路径 如：/child）
+		// 获取方法上定义或继承的@RequestMapping注解，并将其转换为一个RequestMappingInfo对象
 		RequestMappingInfo info = createRequestMappingInfo(method);
 		if (info != null) {
 			// 根据传递的[类]，创建请求映射信息(根路径 如： /root)
