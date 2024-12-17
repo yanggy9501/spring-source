@@ -192,6 +192,10 @@ public abstract class WebApplicationContextUtils {
 			sc.setAttribute(ServletContextScope.class.getName(), appScope);
 		}
 
+		// 注册可解析依赖项-属性这些bean的依赖注入使用对应的 ObjectFactory 来处理（依赖注入，注意不能依赖查找即容器中没有这些bean）
+		// 属性注入的使用创建代理对象进行替换
+		/** @see org.springframework.beans.factory.support.AutowireUtils.ObjectFactoryDelegatingInvocationHandler */
+
 		beanFactory.registerResolvableDependency(ServletRequest.class, new RequestObjectFactory());
 		beanFactory.registerResolvableDependency(ServletResponse.class, new ResponseObjectFactory());
 		beanFactory.registerResolvableDependency(HttpSession.class, new SessionObjectFactory());
@@ -324,6 +328,11 @@ public abstract class WebApplicationContextUtils {
 	@SuppressWarnings("serial")
 	private static class RequestObjectFactory implements ObjectFactory<ServletRequest>, Serializable {
 
+		/**
+		 * 从 ThreadLocal 中获取 ServletRequest，保证 @Autowired 注入的 ServletRequest 是安全的
+		 *
+		 * @return
+		 */
 		@Override
 		public ServletRequest getObject() {
 			return currentRequestAttributes().getRequest();

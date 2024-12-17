@@ -152,7 +152,7 @@ import org.springframework.core.Ordered;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(TransactionManagementConfigurationSelector.class)
+@Import(TransactionManagementConfigurationSelector.class) // ImportSelector
 public @interface EnableTransactionManagement {
 
 	/**

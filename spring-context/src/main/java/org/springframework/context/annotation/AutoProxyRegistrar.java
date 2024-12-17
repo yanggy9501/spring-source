@@ -54,6 +54,7 @@ public class AutoProxyRegistrar implements ImportBeanDefinitionRegistrar {
 	 * {@code proxyTargetClass} attributes, the APC can be registered and configured all
 	 * the same.
 	 */
+	// importingClassMetadata：@EnableTransactionManagement 注解信息
 	@Override
 	public void registerBeanDefinitions(AnnotationMetadata importingClassMetadata, BeanDefinitionRegistry registry) {
 		boolean candidateFound = false;
