@@ -2,10 +2,15 @@ package com.readspring;
 
 import com.readspring.config.AppConfig;
 import com.readspring.config.WebAppConfig;
+import org.springframework.web.SpringServletContainerInitializer;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.ServletContainerInitializer;
 
 /**
  * @author yanggy
+ * @see SpringServletContainerInitializer
+ * @see ServletContainerInitializer
  */
 public class MyInitializerStarter extends AbstractAnnotationConfigDispatcherServletInitializer {
     /**
