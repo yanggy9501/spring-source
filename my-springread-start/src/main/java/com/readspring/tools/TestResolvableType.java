@@ -27,6 +27,7 @@ public class TestResolvableType { // / rɪˈzɑːlvəbl /
 //		new TestResolvableType().testResolvableType();
 //		new TestResolvableType().testResolvableTypeServiceABC();
 		new TestResolvableType().getGenericForJdk();
+		new TestResolvableType().testResolvableTypeServiceABC();
 	}
 
 	/**
@@ -52,6 +53,9 @@ public class TestResolvableType { // / rɪˈzɑːlvəbl /
 
 		ResolvableType oServiceResolvableType = ResolvableType.forField(serviceABC.getClass().getDeclaredField("oService"));
 		System.out.println(oServiceResolvableType.getGeneric(0).resolve());
+
+		// 比较范型是否相等
+		System.out.println(uServiceResolvableType.isAssignableFrom(uServiceResolvableType));
 
 	}
 
